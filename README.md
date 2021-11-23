@@ -65,13 +65,16 @@ If you need to contain `$$` in your text:
 
 ``` bash
 $ npm uninstall hexo-renderer-marked --save
-$ npm install hexo-renderer-kramed --save
+# $ npm install hexo-renderer-kramed --save
+$ npm install https://github.com/WHULS/hexo-renderer-kramed 
 ```
 
 - Hexo 3: >= 0.2
 - Hexo 2: 0.1.x
 
 ## Options
+
+### Kramed
 
 You can configure this plugin in `_config.yml`.
 
@@ -97,3 +100,36 @@ kramed:
 [Markdown]: http://daringfireball.net/projects/markdown/
 [marked]: https://github.com/chjj/marked
 [kramed]: https://github.com/GitbookIO/kramed
+
+### Image URL
+
+`hexo-renderer-kramed` perform better than `hexo-renderer-marked` in formula.
+
+However, the setting of image url prefix is poor. So, with the reference of `hexo-renderer-marked`, I add a configure of image url prefix, which is `marked.prependRoot` in `hexo-renderer-marked`.
+
+example:
+
+`_config.yml`
+
+```yaml
+root: /myblog/blog1
+image:
+	prependRoot: true
+```
+
+`markdown.md`
+
+```markdown
+<img src="/images/image-1.png" alt="image-1" style="zoom:67%;" />
+![image-20211017184546812](/images/image-2.png)
+```
+
+parsed html
+
+```HTML
+<img src="/myblog/blog1/images/image-1.png" alt="image-1.png" style="zoom:67%;" />
+<img src="/myblog/blog1/images/image-2.png" alt="image-2">
+```
+
+- `root`: The root directory of your website [hexo.io](https://hexo.io/docs/configuration.html#URL)
+- `image.prependRoot`: Enable or disable prepend function
